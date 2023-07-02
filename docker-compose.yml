@@ -1,0 +1,25 @@
+version: "3.8"
+
+networks:
+  my-net:
+    driver: bridge
+
+services:
+  mongo:
+    image: mongo:5.0.2
+    restart: always
+    ports:
+      - 27017:27017
+    networks:
+      - my-net
+    # mount volumne
+  app:
+    depends_on:
+      - mongo
+    build: .
+    env_file: ./.env
+    restart: always
+    ports:
+      - 4000:4000
+    networks:
+      - my-net
