@@ -1,17 +1,16 @@
 const mongoose = require('mongoose');
 const { ApolloServer } = require("@apollo/server");
 const { startStandaloneServer } = require("@apollo/server/standalone");
+require('dotenv').config();
 
 const { studentTypeDefs } = require("./modules/students/student.type-defs.js");
 const { studentResolvers } = require("./modules/students/student.resolver");
 const { subjectTypeDefs } = require("./modules/subjects/subject.type-defs");
 const { subjectResolvers } = require("./modules/subjects/subject.resolver");
 
-const MONGO_URI = "mongodb://localhost:27017/student-register";
-
 // Database connection
 mongoose
-  .connect(MONGO_URI, {
+  .connect(process.env.MONGODB_URI, {
     minPoolSize: 10,
   })
   .then(() => {
